@@ -9,6 +9,7 @@ mongoose.set('useCreateIndex', true);
 
 const postsRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
+const dprRoutes = require('./routes/dprs.js');
 
 const app = express();
 
@@ -33,5 +34,6 @@ app.use((req, res, next) => {
 
 app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/dprs", dprRoutes);
 
 module.exports = app;

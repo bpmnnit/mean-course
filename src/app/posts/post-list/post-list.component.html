@@ -1,4 +1,15 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div>
+  <hot-table
+    licenseKey="non-commercial-and-evaluation"
+    class="hot"
+    [data]="posts"
+    [colHeaders]="true"
+    [rowHeaders]="true">
+      <hot-column data="title" title="Title"></hot-column>
+      <hot-column data="content" title="Content"></hot-column>
+  </hot-table>
+</div>
 <mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let post of posts">
     <mat-expansion-panel-header>
@@ -8,7 +19,7 @@
       <img [src]="post.imagePath" [alt]="post.title">
     </div>
     <p>{{ post.content }}</p>
-    <mat-action-row *ngIf="userIsAuthenticated">
+    <mat-action-row *ngIf="userIsAuthenticated && userId === post.creator">
       <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>
       <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
     </mat-action-row>
