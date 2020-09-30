@@ -1,15 +1,4 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<div>
-  <hot-table
-    licenseKey="non-commercial-and-evaluation"
-    class="hot"
-    [data]="posts"
-    [colHeaders]="true"
-    [rowHeaders]="true">
-      <hot-column data="title" title="Title"></hot-column>
-      <hot-column data="content" title="Content"></hot-column>
-  </hot-table>
-</div>
 <mat-accordion multi="true" *ngIf="posts.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let post of posts">
     <mat-expansion-panel-header>

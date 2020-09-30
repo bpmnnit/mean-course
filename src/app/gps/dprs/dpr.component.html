@@ -1,0 +1,33 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<button mat-raised-button color="primary" (click)="onSaveGrid()">Save</button>
+<mat-paginator
+  [length]="totalDprs"
+  [pageSize]="dprsPerPage"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onChangedPage($event)"
+  *ngIf="dprs.length > 0">
+</mat-paginator>
+<mat-card>
+  <div>
+    <hot-table
+      class="hot"
+      [afterChange]="detectChanges"
+      [settings]="hotSettings"
+      [data]="dprs"
+      [hotId]="id">
+        <hot-column data="id" [readOnly]="true" title="ID"></hot-column>
+        <hot-column data="date" title="Date"></hot-column>
+        <hot-column data="fieldparty" title="FP"></hot-column>
+        <hot-column data="accepted" title="Acc"></hot-column>
+        <hot-column data="rejected" title="Rej"></hot-column>
+        <hot-column data="skipped" title="Skp"></hot-column>
+        <hot-column data="recovered" title="Rec"></hot-column>
+        <hot-column data="conversionfactor" title="Conv"></hot-column>
+        <hot-column data="coverage" title="Cov"></hot-column>
+        <hot-column data="area" title="Area"></hot-column>
+        <hot-column data="shottype" title="ST"></hot-column>
+        <hot-column data="acquisitiontype" title="AT"></hot-column>
+    </hot-table>
+  </div>
+</mat-card>
+<p class="info-text mat-body-1" *ngIf="dprs.length <= 0 && !isLoading">Not a single Daily Progress Report found.</p>

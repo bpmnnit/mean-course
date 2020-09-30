@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { Subscription } from 'rxjs';
-import * as Handsontable from "handsontable";
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';

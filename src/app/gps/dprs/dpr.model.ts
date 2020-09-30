@@ -1,13 +1,14 @@
 export interface Dpr {
   id: string;
   date: Date;
+  fieldparty: number;
   accpeted: number;
   rejected: number;
   skippped: number;
   recovered: number;
-  conversion_factor: number;
-  converage: number;
+  conversionfactor: number;
+  coverage: number;
   area: string;
-  shot_type: string;
-  acuisition_type: string;
+  shottype: string;
+  acquisitiontype: string;
 }

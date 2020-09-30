@@ -9,7 +9,7 @@ mongoose.set('useCreateIndex', true);
 
 const postsRoutes = require('./routes/posts');
 const userRoutes = require('./routes/user');
-const dprRoutes = require('./routes/dprs.js');
+const dprRoutes = require('./routes/dprs');
 
 const app = express();
 
