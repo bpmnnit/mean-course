@@ -1,5 +1,4 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<button mat-raised-button color="primary" (click)="onSaveGrid()">Save</button>
 <mat-paginator
   [length]="totalDprs"
   [pageSize]="dprsPerPage"
@@ -10,8 +9,7 @@
 <mat-card>
   <div>
     <hot-table
-      class="hot"
-      [afterChange]="detectChanges"
+      class="hot handsontable htColumnHeaders"
       [settings]="hotSettings"
       [data]="dprs"
       [hotId]="id">
@@ -22,6 +20,7 @@
         <hot-column data="rejected" title="Rej"></hot-column>
         <hot-column data="skipped" title="Skp"></hot-column>
         <hot-column data="recovered" title="Rec"></hot-column>
+        <hot-column data="repeated" title="Rep"></hot-column>
         <hot-column data="conversionfactor" title="Conv"></hot-column>
         <hot-column data="coverage" title="Cov"></hot-column>
         <hot-column data="area" title="Area"></hot-column>

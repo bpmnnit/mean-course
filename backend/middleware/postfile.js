@@ -22,4 +22,4 @@ const storage = multer.diskStorage({
   }
 });
 
-module.exports = multer({storage: storage}).single("locationMapImage");
+module.exports = multer({storage: storage}).single("image");

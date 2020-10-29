@@ -47,3 +47,5 @@ Thumbs.db
 
 # Custom Scripts
 /mongo_scripts
+/backend/images
+.gitignore

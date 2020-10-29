@@ -13,13 +13,14 @@ import { ErrorComponent } from './error/error.component';
 import { PostsModule } from './posts/posts.module';
 import { DprComponent } from './gps/dprs/dpr.component';
 import { HotTableModule } from '@handsontable/angular';
+import { AtlasModule } from './atlas/atlas.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ErrorComponent,
-    DprComponent
+    DprComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +29,8 @@ import { HotTableModule } from '@handsontable/angular';
     HttpClientModule,
     AngularMaterialModule,
     PostsModule,
-    HotTableModule.forRoot()
+    AtlasModule,
+    HotTableModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

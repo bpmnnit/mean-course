@@ -66,6 +66,7 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   onSavePost() {
     if(this.form.invalid) {
       return;

@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { Dpr } from './dpr.model';
 import { DprsService } from './dprs.service';
 import { PageEvent } from '@angular/material';
-import { HotTableRegisterer } from '@handsontable/angular';
 
 @Component({
   selector: 'app-dpr',
@@ -31,7 +30,20 @@ export class DprComponent implements OnInit, OnDestroy {
       {
         data: 'date',
         type: 'date',
-        dateFormat: 'DD-MM-YYYY'
+        dateFormat: 'DD/MM/YYYY',
+        correctFormat: true,
+        defaultDate: '01/01/1900',
+        // datePicker additional options (see https://github.com/dbushell/Pikaday#configuration)
+        datePickerConfig: {
+          // First day of the week (0: Sunday, 1: Monday, etc)
+          firstDay: 0,
+          showWeekNumber: true,
+          numberOfMonths: 1 ,
+          // disableDayFn: function(date) {
+          //   // Disable Sunday and Saturday
+          //   return date.getDay() === 0 || date.getDay() === 6;
+          // }
+        }
       },
       {
         data: 'fieldparty',
@@ -80,6 +92,11 @@ export class DprComponent implements OnInit, OnDestroy {
         type: 'text'
       }
     ],
+    afterChange: (changes, source) => {
+      if(changes && source === 'edit') {
+        this.dprsService.saveDprs(changes, this.dprs.slice());
+      }
+    },
     //manualColumnMove: true,
     //manualRowMove: true,
     //manualColumnResize: true,
@@ -108,7 +125,6 @@ export class DprComponent implements OnInit, OnDestroy {
       }
     }
   };
-  private hotRegisterer = new HotTableRegisterer();
   private dprsSub: Subscription;
 
   constructor(private dprsService: DprsService) {}
@@ -121,7 +137,6 @@ export class DprComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.totalDprs = dprData.dprCount;
         this.dprs = dprData.dprs;
-        console.log(this.dprs);
       });
   }
 
@@ -134,10 +149,6 @@ export class DprComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.dprsPerPage = pageData.pageSize;
     this.dprsService.getDprs(this.dprsPerPage, this.currentPage);
-  }
-
-  onSaveGrid() {
-    this.dprsService.saveDprs(this.hotRegisterer.getInstance(this.id).getData());
   }
 
   detectChanges = (hotInstance, changes, source) => {

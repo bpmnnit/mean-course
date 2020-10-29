@@ -33,7 +33,8 @@ export class DprsService {
               coverage: dpr.coverage,
               area: dpr.area,
               shottype: dpr.shottype,
-              acquisitiontype: dpr.acquisitiontype
+              acquisitiontype: dpr.acquisitiontype,
+              repeated: dpr.repeated
             };
           }),
           maxDprs: dprData.maxDprs
@@ -49,12 +50,13 @@ export class DprsService {
     });
   }
 
-  saveDprs(dprsData: Dpr[]) {
-    console.log(dprsData);
-    // this.http.put(BACKEND_URL + 'update', dprsData)
-    //   .subscribe(response => {
-    //     console.log(response);
-    //   });
+  saveDprs(data, dprs) {
+    let id = dprs[data[0][0]].id;
+    data[0][0] = id;
+    this.http.put(BACKEND_URL + 'update', data)
+      .subscribe(response => {
+        console.log(response);
+      });
   }
 
   getDprUpdateListener() {

@@ -1,4 +1,5 @@
 const Dpr = require('../models/dprs');
+const mongoose = require('mongoose');
 
 exports.getDprs = (req, res, next) => {
   const pageSize = +req.query.pageSize;
@@ -9,7 +10,7 @@ exports.getDprs = (req, res, next) => {
       "$addFields": {
         "date": {
           "$dateToString": {
-            "format": "%d-%m-%Y",
+            "format": "%d/%m/%Y",
             "date": "$date"
           }
         }
@@ -42,5 +43,39 @@ exports.getDprs = (req, res, next) => {
 }
 
 exports.updateDrps = (req, res, next) => {
-  console.log(req.body);
+  let data = req.body[0];
+  let id = data[0];
+  let field = data[1];
+  let value = data[3];
+  switch(field) {
+    case 'fieldparty':
+    case 'accepted':
+    case 'rejected':
+    case 'skipped':
+    case 'recovered':
+    case 'repeated':
+    case 'conversionfactor':
+    case 'coverage':
+      value = +value;
+      break;
+    case 'date':
+      value = value.split('/');
+      value = value[2] + '-' + value[1] + '-' + value[0];
+      value = new Date(value);
+      break;
+  }
+  let idObj = id ? { _id: id } : { _id: mongoose.Types.ObjectId() };
+  Dpr.update(idObj, {$set: {[field]: value}}, {upsert: true}).then(result => {
+    if(result.n > 0) {
+      res.status(200).json({ message: 'Update Successful!' });
+    } else {
+      res.status(401).json({ message: 'User not authorized to edit this DPR.' });
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'DPR updation failed.',
+      error: error
+    });
+  });
 }

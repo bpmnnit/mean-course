@@ -13,7 +13,6 @@ const dprSchema = mongoose.Schema({
   area: { type: String, required: true },
   shottype: { type: String, required: true },
   acquisitiontype: { type: String, required: true },
-
 });
 
 module.exports = mongoose.model('Dpr', dprSchema);
