@@ -8,6 +8,11 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Atlas } from '../atlas.model';
 import { AtlasService } from '../atlas.service';
 
+interface DutyType {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-atlas-create',
   templateUrl: './atlas-create.component.html',
@@ -18,6 +23,10 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
   isLoading = false;
   form: FormGroup;
   locationMapImagePreview: string;
+  dutyTypes: DutyType[] = [
+    { value: 'Onshore', viewValue: 'Offshore' },
+    { value: 'Onshore', viewValue: 'Offshore' }
+  ];
   private mode = 'create';
   private atlasId: string;
   private authStatusSub: Subscription;

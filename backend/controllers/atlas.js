@@ -42,3 +42,32 @@ exports.createAtlas = (req, res, next) => {
     });
   });
 }
+
+exports.getAtlas = (req, res, next) => {
+  const pageSize = +req.query.pageSize;
+  const currentPage = +req.query.page;
+  const atlasQuery = Atlas.find();
+  let fetchedAtlas;
+  if(pageSize && currentPage) {
+    atlasQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+  atlasQuery
+    .then(documents => {
+      fetchedAtlas = documents;
+      return Atlas.countDocuments();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: "Atlas fetched successfully!",
+        atlas: fetchedAtlas,
+        maxAtlas: count
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'Atlas retrieval failed.'
+      });
+    });
+}

@@ -1,0 +1,41 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion multi="true" *ngIf="atlas.length > 0 && !isLoading">
+  <mat-expansion-panel *ngFor="let an_atlas of atlas">
+    <mat-expansion-panel-header>
+      {{ an_atlas.sig }}
+    </mat-expansion-panel-header>
+    <p>{{ an_atlas.name }}</p>
+    <p>{{ an_atlas.onoff }}</p>
+    <p>{{ an_atlas.sector }}</p>
+    <p>{{ an_atlas.basin }}</p>
+    <p>{{ an_atlas.asset }}</p>
+    <p>{{ an_atlas.blocktype }}</p>
+    <p>{{ an_atlas.year }}</p>
+    <p>{{ an_atlas.size }}</p>
+    <p>{{ an_atlas.surveymode }}</p>
+    <p>{{ an_atlas.sourcetype }}</p>
+    <p>{{ an_atlas.acqparty }}</p>
+    <p>{{ an_atlas.acqfromdate }}</p>
+    <p>{{ an_atlas.acqtodate }}</p>
+    <p>{{ an_atlas.acqagency }}</p>
+    <p>{{ an_atlas.procparty }}</p>
+    <p>{{ an_atlas.procfromdate }}</p>
+    <p>{{ an_atlas.proctodate }}</p>
+    <p>{{ an_atlas.procagency }}</p>
+    <div class="an_atlas-locationMapImage">
+      <img [src]="an_atlas.locationMapImagePath" [alt]="an_atlas.sig">
+    </div>
+    <mat-action-row *ngIf="userIsAuthenticated && userId === an_atlas.creator">
+      <a mat-button color="primary" [routerLink]="['/edit', an_atlas.id]">EDIT</a>
+      <button mat-button color="warn" (click)="onDelete(an_atlas.id)">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  [length]="totalAtlas"
+  [pageSize]="atlasPerPage"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onChangedPage($event)"
+  *ngIf="atlas.length > 0">
+</mat-paginator>
+<p class="info-text mat-body-1" *ngIf="atlas.length <= 0 && !isLoading">No atlas added yet!</p>

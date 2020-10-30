@@ -37,12 +37,12 @@ export class AtlasService {
               surveymode: an_atlas.surveymode,
               sourcetype: an_atlas.sourcetype,
               acqparty: an_atlas.acqparty,
-              acqfromdate: an_atlas.acqfromdate,
-              acqtodate: an_atlas.acqtodate,
+              acqfromdate: this.getFormattedDate(an_atlas.acqfromdate),
+              acqtodate: this.getFormattedDate(an_atlas.acqtodate),
               acqagency: an_atlas.acqagency,
               procparty: an_atlas.procparty,
-              procfromdate: an_atlas.procfromdate,
-              proctodate: an_atlas.proctodate,
+              procfromdate: this.getFormattedDate(an_atlas.procfromdate),
+              proctodate: this.getFormattedDate(an_atlas.proctodate),
               procagency: an_atlas.procagency,
               locationMapImagePath: an_atlas.locationMapImagePath,
               creator: an_atlas.creator
@@ -101,6 +101,24 @@ export class AtlasService {
       .subscribe(responseData => {
         this.router.navigate(["/"]);
       });
+  }
+
+  getFormattedDate(d: Date) {
+    let date = new Date(d);
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let dt = date.getDate();
+    let day = '';
+    let m = '';
+
+    if (dt < 10) {
+      day = '0' + dt.toString();
+    }
+    if (month < 10) {
+      m = '0' + month.toString();
+    }
+    let formattedDate = day + '/' + m + '/'+ year;
+    return formattedDate;
   }
 
   updateAtlas(id: string, sig: string, name: string, onoff: string, sector: string, basin: string, asset: string, blocktype: string, year: string, size: number, surveymode: string, sourcetype: string, acqparty: string, acqfromdate: Date, acqtodate: Date, acqagency: string, procparty: string, procfromdate: Date, proctodate: Date, procagency: string, locationMapImage: File | string) {

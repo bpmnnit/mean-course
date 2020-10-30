@@ -2,39 +2,39 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { Subscription } from 'rxjs';
 
-import { Post } from '../post.model';
-import { PostsService } from '../posts.service';
+import { Atlas } from '../atlas.model';
+import { AtlasService } from '../atlas.service';
 import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
-  selector: 'app-post-list',
-  templateUrl: './post-list.component.html',
-  styleUrls: ['./post-list.component.css']
+  selector: 'app-atlas-list',
+  templateUrl: './atlas-list.component.html',
+  styleUrls: ['./atlas-list.component.css']
 })
-export class PostListComponent implements OnInit, OnDestroy {
-  posts: Post[] = [];
+export class AtlasListComponent implements OnInit, OnDestroy {
+  atlas: Atlas[] = [];
   isLoading = false;
-  totalPosts = 0;
-  postsPerPage = 2;
+  totalAtlas = 0;
+  atlasPerPage = 2;
   pageSizeOptions = [1, 2, 5, 10];
   currentPage = 1;
   userIsAuthenticated = false;
   userId: string;
-  private postsSub: Subscription;
+  private atlasSub: Subscription;
   private authStatusSubs: Subscription;
 
-  constructor(public postsService: PostsService, private authService: AuthService) {}
+  constructor(public atlasService: AtlasService, private authService: AuthService) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    this.atlasService.getAtlas(this.atlasPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
-    this.postsSub = this.postsService.getPostUpdateListener()
-      .subscribe((postData: { posts: Post[], postCount: number }) => {
+    this.atlasSub = this.atlasService.getAtlasUpdateListener()
+      .subscribe((atlasData: { atlas: Atlas[], atlasCount: number }) => {
         this.isLoading = false;
-        this.totalPosts = postData.postCount;
-        this.posts = postData.posts;
+        this.totalAtlas = atlasData.atlasCount;
+        this.atlas = atlasData.atlas;
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSubs = this.authService
@@ -46,14 +46,14 @@ export class PostListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.postsSub.unsubscribe();
+    this.atlasSub.unsubscribe();
     this.authStatusSubs.unsubscribe();
   }
 
-  onDelete(postId: string) {
+  onDelete(atlasId: string) {
     this.isLoading = true;
-    this.postsService.deletePost(postId).subscribe(() => {
-      this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    this.atlasService.deleteAtlas(atlasId).subscribe(() => {
+      this.atlasService.getAtlas(this.atlasPerPage, this.currentPage);
     }, () => {
       this.isLoading = false;
     });
@@ -62,7 +62,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
-    this.postsPerPage = pageData.pageSize;
-    this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    this.atlasPerPage = pageData.pageSize;
+    this.atlasService.getAtlas(this.atlasPerPage, this.currentPage);
   }
 }
