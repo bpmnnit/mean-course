@@ -8,6 +8,9 @@
       <a mat-button routerLink="/create" routerLinkActive="mat-accent">New Post</a>
     </li>
     <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="/atlaslist" routerLinkActive="mat-accent">All Atlas</a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
       <a mat-button routerLink="/atlascreate" routerLinkActive="mat-accent">New Atlas</a>
     </li>
     <li *ngIf="!userIsAuthenticated">

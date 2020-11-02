@@ -2,18 +2,10 @@
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form [formGroup]="form" (submit)="onSaveAtlas()" *ngIf="!isLoading">
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="sig"
-        placeholder="SIG">
+      <input matInput type="text" formControlName="sig" placeholder="SIG">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="name"
-        placeholder="Name">
+      <input matInput type="text" formControlName="name" placeholder="Name">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Onshore/Offshore</mat-label>
@@ -24,116 +16,87 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="sector"
-        placeholder="Sector">
+      <input matInput type="text" formControlName="sector" placeholder="Sector">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="basin"
-        placeholder="Basin">
+      <input matInput type="text" formControlName="basin" placeholder="Basin">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="asset"
-        placeholder="Asset">
+      <input matInput type="text" formControlName="asset" placeholder="Asset">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="blocktype"
-        placeholder="Block Type">
+      <input matInput type="text" formControlName="blocktype" placeholder="Block Type">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="year"
-        placeholder="Year">
+      <input matInput type="text" formControlName="year" placeholder="Year">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="number"
-        formControlName="size"
-        placeholder="Size (square kilometers)">
+      <input matInput type="number" formControlName="size" placeholder="Size (square kilometers)">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="surveymode"
-        placeholder="Survey Mode">
+      <input matInput type="text" formControlName="surveymode" placeholder="Survey Mode">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="sourcetype"
-        placeholder="Source Type">
+      <input matInput type="text" formControlName="sourcetype" placeholder="Source Type">
+    </mat-form-field>
+    <mat-card class="latlong">
+      <div formGroupName="acqgrid">
+        <p>Acquisition Grid:</p>
+        <div *ngFor="let latlongCtrl of controls; let i = index"
+          [formGroupName]="i">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="lat"
+              placeholder="Latitude">
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="lng"
+              placeholder="Longitude">
+          </mat-form-field>
+        </div>
+      </div>
+      <button mat-raised-button color="primary" type="button" (click)="onAddLatLong()" >Add Lat-Long</button>
+    </mat-card>
+    <mat-form-field>
+      <input matInput type="text" formControlName="acqparty" placeholder="Acquistion Party">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Acquistion Start Date</mat-label>
+      <input matInput [matDatepicker]="acqStartDatepicker" formControlName="acqfromdate">
+      <mat-datepicker-toggle matSuffix [for]="acqStartDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #acqStartDatepicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Acquistion End Date</mat-label>
+      <input matInput [matDatepicker]="acqEndDatePicker" formControlName="acqtodate">
+      <mat-datepicker-toggle matSuffix [for]="acqEndDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #acqEndDatePicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="acqparty"
-        placeholder="Acquistion Party">
+      <input matInput type="text" formControlName="acqagency" placeholder="Agency">
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="date"
-        formControlName="acqfromdate"
-        placeholder="From Date">
+      <input matInput type="text" formControlName="procparty" placeholder="Processing Party">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Processing Start Date</mat-label>
+      <input matInput [matDatepicker]="procStartDatePicker" formControlName="procfromdate">
+      <mat-datepicker-toggle matSuffix [for]="procStartDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #procStartDatePicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Processing End Date</mat-label>
+      <input matInput [matDatepicker]="procEndDatePicker" formControlName="proctodate">
+      <mat-datepicker-toggle matSuffix [for]="procEndDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #procEndDatePicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <input
-        matInput
-        type="date"
-        formControlName="acqtodate"
-        placeholder="To Date">
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="acqagency"
-        placeholder="Agency">
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="procparty"
-        placeholder="Processing Party">
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="date"
-        formControlName="procfromdate"
-        placeholder="Processing Start Date">
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="date"
-        formControlName="proctodate"
-        placeholder="Processing End Date">
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="text"
-        formControlName="procagency"
-        placeholder="Processing Agency">
+      <input matInput type="text" formControlName="procagency" placeholder="Processing Agency">
     </mat-form-field>
     <div>
       <span>Select the Location Map Image: </span>
@@ -143,9 +106,6 @@
     <div class="image-preview" *ngIf="locationMapImagePreview !== '' && locationMapImagePreview && form.get('locationMapImage').valid">
       <img [src]="locationMapImagePreview" [alt]="form.value.sig">
     </div>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit">Save Atlas</button>
+    <button mat-raised-button color="primary" type="submit" class="saveAtlasButton">Save Atlas</button>
   </form>
 </mat-card>

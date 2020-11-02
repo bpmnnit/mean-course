@@ -16,6 +16,7 @@ exports.createAtlas = (req, res, next) => {
     size: req.body.size,
     surveymode: req.body.surveymode,
     sourcetype: req.body.sourcetype,
+    acqgrid: JSON.parse(req.body.acqgrid),
     acqparty: req.body.acqparty,
     acqfromdate: req.body.acqfromdate,
     acqtodate: req.body.acqtodate,
@@ -56,6 +57,7 @@ exports.getAtlas = (req, res, next) => {
   atlasQuery
     .then(documents => {
       fetchedAtlas = documents;
+      console.log(fetchedAtlas);
       return Atlas.countDocuments();
     })
     .then(count => {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -24,7 +24,7 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
   form: FormGroup;
   locationMapImagePreview: string;
   dutyTypes: DutyType[] = [
-    { value: 'Onshore', viewValue: 'Offshore' },
+    { value: 'Onshore', viewValue: 'Onshore' },
     { value: 'Onshore', viewValue: 'Offshore' }
   ];
   private mode = 'create';
@@ -54,6 +54,12 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
       size: new FormControl(null),
       surveymode: new FormControl(null),
       sourcetype: new FormControl(null),
+      acqgrid: new FormArray([
+        new FormGroup({
+          'lat': new FormControl(),
+          'lng': new FormControl()
+        })
+      ]),
       acqparty: new FormControl(null),
       acqfromdate: new FormControl(null),
       acqtodate: new FormControl(null),
@@ -62,7 +68,7 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
       procfromdate: new FormControl(null),
       proctodate: new FormControl(null),
       procagency: new FormControl(null),
-      locationMapImage: new FormControl(null)
+      locationMapImage: new FormControl(null),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if(paramMap.has('atlasId')) {
@@ -84,6 +90,7 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
             size: atlasData.size,
             surveymode: atlasData.surveymode,
             sourcetype: atlasData.sourcetype,
+            acqgrid: atlasData.acqgrid,
             acqparty: atlasData.acqparty,
             acqfromdate: atlasData.acqfromdate,
             acqtodate: atlasData.acqtodate,
@@ -107,6 +114,7 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
             size: atlasData.size,
             surveymode: atlasData.surveymode,
             sourcetype: atlasData.sourcetype,
+            acqgrid: atlasData.acqgrid,
             acqparty: atlasData.acqparty,
             acqfromdate: atlasData.acqfromdate,
             acqtodate: atlasData.acqtodate,
@@ -125,12 +133,38 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
     });
   }
 
+  onAddLatLong() {
+    (<FormArray>this.form.get('acqgrid')).push(
+      new FormGroup({
+        'lat': new FormControl(null),
+        'lng': new FormControl(null)
+      })
+    );
+  }
+
+  onDeleteLatLong(index: number) {
+    (<FormArray>this.form.get('acqgrid')).removeAt(index);
+  }
+
+  onDeleteAllLatLong() {
+    (<FormArray>this.form.get('acqgrid')).clear();
+  }
+
+  getLatLongCount() {
+    return (<FormArray>this.form.get('acqgrid')).length;
+  }
+
+  get controls() { // a getter!
+    return (<FormArray>this.form.get('acqgrid')).controls;
+  }
+
   onSaveAtlas() {
     if(this.form.invalid) {
       return;
     }
     this.isLoading = true;
     if(this.mode === 'create') {
+      console.log(this.form.value);
       this.atlasService.addAtlas(
         this.form.value.sig,
         this.form.value.name,
@@ -143,6 +177,7 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
         this.form.value.size,
         this.form.value.surveymode,
         this.form.value.sourcetype,
+        this.form.value.acqgrid,
         this.form.value.acqparty,
         this.form.value.acqfromdate,
         this.form.value.acqtodate,
@@ -167,6 +202,7 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
         this.form.value.size,
         this.form.value.surveymode,
         this.form.value.sourcetype,
+        this.form.value.acqgrid,
         this.form.value.acqparty,
         this.form.value.acqfromdate,
         this.form.value.acqtodate,

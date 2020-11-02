@@ -1,6 +1,11 @@
-mat-form-field,
-textarea {
-  width: 100%;
+mat-form-field {
+  width: fit-content;
+  margin-right: 1rem;
+}
+
+mat-card, .latlong {
+  margin-bottom: 1rem;
+  width: 75%;
 }
 
 mat-spinner {
@@ -18,4 +23,8 @@ input[type="file"] {
 
 .image-preview img {
   height: 100%;
+}
+
+button, .saveAtlasButton {
+  margin-top: 1rem;
 }
