@@ -4,13 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AngularMaterialModule } from '../angular-material.module';
-import { AtlasCreateComponent} from './atlas-create/atlas-create.component';
-import { AtlasListComponent } from './atlas-list/atlas-list.component';
+
+import { AcqProjectCreateComponent } from './acqproject-create/acqproject-create.component';
 
 @NgModule({
   declarations:[
-    AtlasCreateComponent,
-    AtlasListComponent
+    AcqProjectCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -19,6 +18,6 @@ import { AtlasListComponent } from './atlas-list/atlas-list.component';
     RouterModule,
   ],
 })
-export class AtlasModule {
+export class AcqProjectModule {
 
 }

@@ -14,6 +14,7 @@ import { PostsModule } from './posts/posts.module';
 import { DprComponent } from './gps/dprs/dpr.component';
 import { HotTableModule } from '@handsontable/angular';
 import { AtlasModule } from './atlas/atlas.module';
+import { AcqProjectModule } from './acqproject/acqproject.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AtlasModule } from './atlas/atlas.module';
     AngularMaterialModule,
     PostsModule,
     AtlasModule,
+    AcqProjectModule,
     HotTableModule.forRoot(),
   ],
   providers: [

@@ -73,7 +73,10 @@ export class AtlasService {
   }
 
   addAtlas(sig: string, name: string, onoff: string, sector: string, basin: string, asset: string, blocktype: string, year: string, size: number, surveymode: string, sourcetype: string, acqgrid: [{lat: string, lng: string}], acqparty: string, acqfromdate: Date, acqtodate: Date, acqagency: string, procparty: string, procfromdate: Date, proctodate: Date, procagency: string, locationMapImage: File) {
-    console.log(acqgrid);
+    console.log(acqfromdate);
+    console.log(acqtodate);
+    console.log(procfromdate);
+    console.log(proctodate);
     const atlasData = new FormData();
     atlasData.append("sig", sig);
     atlasData.append("name", name);
@@ -96,7 +99,6 @@ export class AtlasService {
     atlasData.append("proctodate", proctodate.toString());
     atlasData.append("procagency", procagency);
     atlasData.append("locationMapImage", locationMapImage, sig);
-    console.log(atlasData);
     this.http
       .post<{ message: string; atlas: Atlas }>(
         BACKEND_URL,

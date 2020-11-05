@@ -18,16 +18,17 @@ exports.createAtlas = (req, res, next) => {
     sourcetype: req.body.sourcetype,
     acqgrid: JSON.parse(req.body.acqgrid),
     acqparty: req.body.acqparty,
-    acqfromdate: req.body.acqfromdate,
-    acqtodate: req.body.acqtodate,
+    acqfromdate: new Date(req.body.acqfromdate),
+    acqtodate: new Date(req.body.acqtodate),
     acqagency: req.body.acqagency,
     procparty: req.body.procparty,
-    procfromdate: req.body.procfromdate,
-    proctodate: req.body.proctodate,
+    procfromdate: new Date(req.body.procfromdate),
+    proctodate: new Date(req.body.proctodate),
     procagency: req.body.procagency,
     locationMapImagePath: url + '/images/' + req.file.filename,
     creator: req.userData.userId
   });
+  console.log(atlas);
   atlas.save().then(createdAtlas => {
     res.status(201).json({
       message: 'Atlas added successfully.',

@@ -65,13 +65,13 @@
     <mat-form-field>
       <input matInput type="text" formControlName="acqparty" placeholder="Acquistion Party">
     </mat-form-field>
-    <mat-form-field appearance="fill">
+    <mat-form-field>
       <mat-label>Acquistion Start Date</mat-label>
       <input matInput [matDatepicker]="acqStartDatepicker" formControlName="acqfromdate">
       <mat-datepicker-toggle matSuffix [for]="acqStartDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #acqStartDatepicker></mat-datepicker>
     </mat-form-field>
-    <mat-form-field appearance="fill">
+    <mat-form-field>
       <mat-label>Acquistion End Date</mat-label>
       <input matInput [matDatepicker]="acqEndDatePicker" formControlName="acqtodate">
       <mat-datepicker-toggle matSuffix [for]="acqEndDatePicker"></mat-datepicker-toggle>
@@ -83,13 +83,13 @@
     <mat-form-field>
       <input matInput type="text" formControlName="procparty" placeholder="Processing Party">
     </mat-form-field>
-    <mat-form-field appearance="fill">
+    <mat-form-field>
       <mat-label>Processing Start Date</mat-label>
       <input matInput [matDatepicker]="procStartDatePicker" formControlName="procfromdate">
       <mat-datepicker-toggle matSuffix [for]="procStartDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #procStartDatePicker></mat-datepicker>
     </mat-form-field>
-    <mat-form-field appearance="fill">
+    <mat-form-field>
       <mat-label>Processing End Date</mat-label>
       <input matInput [matDatepicker]="procEndDatePicker" formControlName="proctodate">
       <mat-datepicker-toggle matSuffix [for]="procEndDatePicker"></mat-datepicker-toggle>
