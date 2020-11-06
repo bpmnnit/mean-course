@@ -15,10 +15,9 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class AtlasListComponent implements OnInit, OnDestroy {
   atlas: Atlas[] = [];
   isLoading = false;
-  displayedAtlasGridPointsColumns: string[] = ['lat', 'lng'];
   totalAtlas = 0;
-  atlasPerPage = 10;
-  pageSizeOptions = [10, 30, 50];
+  atlasPerPage = 2;
+  pageSizeOptions = [1, 2, 5, 10];
   currentPage = 1;
   userIsAuthenticated = false;
   userId: string;

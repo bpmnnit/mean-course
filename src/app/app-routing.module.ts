@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'dprcreate', component: DprComponent },
   { path: 'atlascreate', component: AtlasCreateComponent, canActivate: [AuthGuard] },
   { path: 'atlaslist', component: AtlasListComponent, canActivate: [AuthGuard] },
-  { path: 'acqprojcreate', component: AcqProjectCreateComponent, canActivate: [AuthGuard] },
+  { path: 'apc', component: AcqProjectCreateComponent, canActivate: [AuthGuard] },
   { path: 'edit/:postId', component: PostCreateComponent, canActivate: [AuthGuard] },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) } // lazy loading
 ];

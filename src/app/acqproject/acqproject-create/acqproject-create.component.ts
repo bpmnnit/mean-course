@@ -10,7 +10,7 @@ import { AcqProjectService } from '../acqproject.service';
 @Component({
   selector: 'app-acqproject-create',
   templateUrl: './acqproject-create.component.html',
-  styleUrls: ['./acqproject-create.component.html']
+  styleUrls: ['./acqproject-create.component.css']
 })
 export class AcqProjectCreateComponent implements OnInit, OnDestroy {
   acqProject: AcqProject;

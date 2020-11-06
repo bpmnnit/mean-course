@@ -14,20 +14,6 @@
     <p>{{ an_atlas.size }}</p>
     <p>{{ an_atlas.surveymode }}</p>
     <p>{{ an_atlas.sourcetype }}</p>
-    <table mat-table [dataSource]="an_atlas.acqgrid" class="mat-elevation-z8">
-      <!-- Latitude Column -->
-      <ng-container matColumnDef="lat">
-        <th mat-header-cell *matHeaderCellDef> Latitude </th>
-        <td mat-cell *matCellDef="let element"> {{element.lat}} </td>
-      </ng-container>
-      <!-- Longitude Column -->
-      <ng-container matColumnDef="lng">
-        <th mat-header-cell *matHeaderCellDef> Longitude </th>
-        <td mat-cell *matCellDef="let element"> {{element.lng}} </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedAtlasGridPointsColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedAtlasGridPointsColumns;"></tr>
-    </table>
     <p>{{ an_atlas.acqparty }}</p>
     <p>{{ an_atlas.acqfromdate }}</p>
     <p>{{ an_atlas.acqtodate }}</p>

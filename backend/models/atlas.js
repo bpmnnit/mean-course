@@ -21,7 +21,6 @@ const atlasSchema = mongoose.Schema({
   proctodate: { type: Date },
   procagency: { type: String },
   locationMapImagePath: { type: String },
-  acqgrid: { type : Array , "default" : [] },
   creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });
 

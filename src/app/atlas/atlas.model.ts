@@ -20,6 +20,5 @@ export interface Atlas {
   proctodate: Date;
   procagency: string;
   locationMapImagePath: string;
-  acqgrid: [{lat:string, lng: string}];
   creator: string;
 }
