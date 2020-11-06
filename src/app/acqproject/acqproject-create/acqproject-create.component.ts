@@ -129,7 +129,7 @@ export class AcqProjectCreateComponent implements OnInit, OnDestroy {
   }
 
   onAddStreamerProfile() {
-    (<FormArray>this.form.get('streamer_profile')).push(new FormControl(null));
+    (<FormArray>this.form.get('streamer_profile')).push(new FormControl());
   }
 
   onDeleteStreamerProfile(index: number) {
@@ -176,10 +176,7 @@ export class AcqProjectCreateComponent implements OnInit, OnDestroy {
         this.form.value.prime,
         this.form.value.infill_cap,
         this.form.value.prefix,
-        {
-          'x': this.form.value.direction_x,
-          'y': this.form.value.direction_y,
-        },
+        this.form.value.direction,
         this.form.value.streamer_profile,
         this.form.value.planned_completion_days
       );
@@ -206,10 +203,7 @@ export class AcqProjectCreateComponent implements OnInit, OnDestroy {
         this.form.value.prime,
         this.form.value.infill_cap,
         this.form.value.prefix,
-        {
-          'x': this.form.value.direction_x,
-          'y': this.form.value.direction_y,
-        },
+        this.form.value.direction,
         this.form.value.streamer_profile,
         this.form.value.planned_completion_days
       );

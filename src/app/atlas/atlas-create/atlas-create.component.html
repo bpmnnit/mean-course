@@ -79,6 +79,30 @@
         formControlName="sourcetype"
         placeholder="Source Type">
     </mat-form-field>
+    <mat-card class="latlong">
+      <div formGroupName="acqgrid">
+        <p>Acquisition Grid:</p>
+        <div *ngFor="let latlongCtrl of controls; let i = index"
+          [formGroupName]="i">
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="lat"
+              placeholder="Latitude">
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="lng"
+              placeholder="Longitude">
+          </mat-form-field>
+        </div>
+      </div>
+      <button mat-raised-button color="primary" type="button" (click)="onAddLatLong()" >Add Lat-Long</button>
+    </mat-card>
+
     <mat-form-field>
       <input
         matInput

@@ -172,24 +172,19 @@
     <mat-form-field>
       <input matInput type="text" formControlName="prefix" placeholder="Prefix">
     </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="direction_x" placeholder="Direciton X">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="direction_y" placeholder="Direciton Y">
-    </mat-form-field>
-    <mat-card class="latlong">
-      <div *ngFor="let spCtrl of controls; let i = index"
-        [formGroupName]="i">
+    <div formGroupName="direction">
+      <mat-form-field>
+        <input matInput type="number" formControlName="x" placeholder="Direction X">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" formControlName="y" placeholder="Direction Y">
+      </mat-form-field>
+    </div>
+    <div formArrayName="streamer_profile" class="latlong">
         <mat-form-field>
-          <input
-            matInput
-            formControlName="streamer_profile"
-            placeholder="Streamer_profile">
+          <input matInput formControlName="i" placeholder="Streamer Profile">
         </mat-form-field>
-        <button mat-raised-button color="primary" type="button" (click)="onAddStreamerProfile()" >Add Streamer Profile</button>
-      </div>
-    </mat-card>
+    </div>
     <mat-form-field>
       <input matInput type="number" formControlName="record_length" placeholder="Record Length">
     </mat-form-field>
