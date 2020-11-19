@@ -47,7 +47,7 @@ exports.createAcqProject = (req, res, next) => {
   });
 }
 
-exports.getAcqProject = (req, res, next) => {
+exports.getAcqProjects = (req, res, next) => {
   const pageSize = +req.query.pageSize;
   const currentPage = +req.query.page;
   const acqProjectQuery = AcqProject.find();

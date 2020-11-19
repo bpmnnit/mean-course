@@ -57,8 +57,8 @@ export class AcqProjectCreateComponent implements OnInit, OnDestroy {
         'x': new FormControl(),
         'y': new FormControl()
       }),
-      streamer_profile: new FormArray([]),
-      planned_completion_days: new FormControl(null),
+      streamer_profile: new FormArray([ new FormControl(null) ]),
+      planned_completion_days: new FormControl(null)
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if(paramMap.has('acqProjectId')) {
@@ -210,6 +210,17 @@ export class AcqProjectCreateComponent implements OnInit, OnDestroy {
     }
     this.form.reset();
   }
+
+  // onImagePicked(event: Event) {
+  //   const file = (event.target as HTMLInputElement).files[0]; // file object
+  //   this.form.patchValue({locationMapImage: file});
+  //   this.form.get('locationMapImage').updateValueAndValidity();
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     this.locationMapImagePreview = reader.result as string;
+  //   };
+  //   reader.readAsDataURL(file);
+  // }
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

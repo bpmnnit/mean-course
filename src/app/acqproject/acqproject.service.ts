@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AcqProject } from './acqproject.model';
 
-const BACKEND_URL = environment.apiUrl + '/acqProject/';
+const BACKEND_URL = environment.apiUrl + '/apc/';
 
 @Injectable({ providedIn: 'root' })
 export class AcqProjectService {
@@ -22,33 +22,33 @@ export class AcqProjectService {
     .pipe(
       map(acqProjectData => {
         return {
-          acqProject: acqProjectData.acqProject.map(acqProject => {
+          acqProject: acqProjectData.acqProject.map(acqProj => {
             return {
-              id: acqProject._id,
-              area: acqProject.area,
-              contract: acqProject.contract,
-              vessel: acqProject.vessel,
-              contractor: acqProject.contractor,
-              start_date: acqProject.start_date,
-              end_date: acqProject.end_date,
-              mob_start_date: acqProject.mob_start_date,
-              mob_end_date: acqProject.mob_end_date,
-              volume: acqProject.volume,
-              source_interval: acqProject.source_interval,
-              sail_line_interval: acqProject.sail_line_interval,
-              streamer_length: acqProject.streamer_length,
-              receiver_interval: acqProject.receiver_interval,
-              shot_point_interval: acqProject.shot_point_interval,
-              source_array: acqProject.source_array,
-              streamers: acqProject.streamers,
-              record_length: acqProject.record_length,
-              prime: acqProject.prime,
-              infill_cap: acqProject.infill_cap,
-              prefix: acqProject.prefix,
-              direction: acqProject.direction,
-              streamer_profile: acqProject.streamer_profile,
-              planned_completion_days: acqProject.planned_completion_days,
-              creator: acqProject.creator
+              id: acqProj._id,
+              area: acqProj.area,
+              contract: acqProj.contract,
+              vessel: acqProj.vessel,
+              contractor: acqProj.contractor,
+              start_date: acqProj.start_date,
+              end_date: acqProj.end_date,
+              mob_start_date: acqProj.mob_start_date,
+              mob_end_date: acqProj.mob_end_date,
+              volume: acqProj.volume,
+              source_interval: acqProj.source_interval,
+              sail_line_interval: acqProj.sail_line_interval,
+              streamer_length: acqProj.streamer_length,
+              receiver_interval: acqProj.receiver_interval,
+              shot_point_interval: acqProj.shot_point_interval,
+              source_array: acqProj.source_array,
+              streamers: acqProj.streamers,
+              record_length: acqProj.record_length,
+              prime: acqProj.prime,
+              infill_cap: acqProj.infill_cap,
+              prefix: acqProj.prefix,
+              direction: acqProj.direction,
+              streamer_profile: acqProj.streamer_profile,
+              planned_completion_days: acqProj.planned_completion_days,
+              creator: acqProj.creator
             };
           }),
           maxAcqProject: acqProjectData.maxAcqProject
@@ -74,16 +74,16 @@ export class AcqProjectService {
     );
   }
 
-  addAcqProject(area: string, contract: string, vessel: string, contractor: string, start_date: Date, end_date: Date, mob_start_date: Date, mob_end_date: Date, volume: number, source_interval: number, sail_line_interval: number, streamer_length: number, receiver_interval: number, shot_point_interval: number, source_array: number, streamers: number, record_length: number, prime: number, infill_cap: number, prefix: string, direction: { x: number, y: number }, streamer_profile: [string], planned_completion_days: number) {
+  addAcqProject(area: string, contract: string, vessel: string, contractor: string, start_date: Date, end_date: Date, mob_start_date: Date, mob_end_date: Date, volume: number, source_interval: number, sail_line_interval: number, streamer_length: number, receiver_interval: number, shot_point_interval: number, source_array: number, streamers: number, record_length: number, prime: number, infill_cap: number, prefix: string, direction: {x: number, y: number}, streamer_profile: [string], planned_completion_days: number) {
     const acqProjectData = new FormData();
     acqProjectData.append("area", area);
     acqProjectData.append("contract", contract);
     acqProjectData.append("vessel", vessel);
     acqProjectData.append("contractor", contractor);
-    acqProjectData.append("start_date", start_date.toISOString());
-    acqProjectData.append("end_date", end_date.toISOString());
-    acqProjectData.append("mob_start_date", mob_start_date.toISOString());
-    acqProjectData.append("mob_end_date", mob_end_date.toISOString());
+    acqProjectData.append("start_date", start_date.toString());
+    acqProjectData.append("end_date", end_date.toString());
+    acqProjectData.append("mob_start_date", mob_start_date.toString());
+    acqProjectData.append("mob_end_date", mob_end_date.toString());
     acqProjectData.append("volume", volume.toString());
     acqProjectData.append("source_interval", source_interval.toString());
     acqProjectData.append("sail_line_interval", sail_line_interval.toString());
@@ -95,17 +95,18 @@ export class AcqProjectService {
     acqProjectData.append("record_length", record_length.toString());
     acqProjectData.append("prime", prime.toString());
     acqProjectData.append("infill_cap", infill_cap.toString());
-    acqProjectData.append("prefix", prefix.toString());
+    acqProjectData.append("prefix", prefix);
     acqProjectData.append("direction", JSON.stringify(direction));
-    acqProjectData.append("streamer_profile", streamer_profile.toString());
+    acqProjectData.append("streamer_profile", JSON.stringify(streamer_profile));
     acqProjectData.append("planned_completion_days", planned_completion_days.toString());
+    console.log(acqProjectData);
     this.http
       .post<{ message: string; acqProject: AcqProject }>(
         BACKEND_URL,
         acqProjectData
       )
       .subscribe(responseData => {
-        this.router.navigate(["acqProjectlist"]);
+        this.router.navigate(["/"]);
       });
   }
 
@@ -123,11 +124,11 @@ export class AcqProjectService {
     if (month < 10) {
       m = '0' + month.toString();
     }
-    let formattedDate = day + '/' + m + '/'+ year;
+    let formattedDate = year + '-' + m + '-' + day; // + '/' + m + '/'+ year;
     return formattedDate;
   }
 
-  updateAcqProject(id: string, area: string, contract: string, vessel: string, contractor: string, start_date: Date, end_date: Date, mob_start_date: Date, mob_end_date: Date, volume: number, source_interval: number, sail_line_interval: number, streamer_length: number, receiver_interval: number, shot_point_interval: number, source_array: number, streamers: number, record_length: number, prime: number, infill_cap: number, prefix: string, direction: { x: number, y: number }, streamer_profile: [string], planned_completion_days: number) {
+  updateAcqProject(id: string, area: string, contract: string, vessel: string, contractor: string, start_date: Date, end_date: Date, mob_start_date: Date, mob_end_date: Date, volume: number, source_interval: number, sail_line_interval: number, streamer_length: number, receiver_interval: number, shot_point_interval: number, source_array: number, streamers: number, record_length: number, prime: number, infill_cap: number, prefix: string, direction: {x: number, y: number}, streamer_profile: [string], planned_completion_days: number) {
     let acqProjectData: AcqProject;
     acqProjectData = {
       id: id,

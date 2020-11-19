@@ -1,4 +1,5 @@
 <mat-card>
+  <h3 style="text-align: center;">Offshore DPR Creation Form: </h3>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <form [formGroup]="form" (submit)="onSaveAcqProject()" *ngIf="!isLoading">
     <mat-form-field>
@@ -8,7 +9,7 @@
       <input matInput type="text" formControlName="contract" placeholder="Contract">
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" formControlName="vessel" placeholder="Vesel">
+      <input matInput type="text" formControlName="vessel" placeholder="Vessel">
     </mat-form-field>
     <mat-form-field>
       <input matInput type="text" formControlName="contractor" placeholder="Contractor">
@@ -38,106 +39,7 @@
       <mat-datepicker #mob_end_date></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" formControlName="volume" placeholder="Volume (square kilometers)">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="source_interval" placeholder="Source Interval">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="sail_line_interval" placeholder="Sail Line Interval">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="streamer_length" placeholder="Streamer Length">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="receiver_interval" placeholder="Receiver Interval">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="shot_point_interval" placeholder="Shot Point Interval">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="source_array" placeholder="Source Array">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="streamers" placeholder="Streamers">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="record_length" placeholder="Record Length">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="prime" placeholder="Prime">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="infill_cap" placeholder="Infill Cap">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" formControlName="prefix" placeholder="Prefix">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="direction_x" placeholder="Direciton X">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="direction_y" placeholder="Direciton Y">
-    </mat-form-field>
-    <mat-card class="latlong">
-      <div *ngFor="let spCtrl of controls; let i = index"
-        [formGroupName]="i">
-        <mat-form-field>
-          <input
-            matInput
-            formControlName="streamer_profile"
-            placeholder="Streamer_profile">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="button" (click)="onAddStreamerProfile()" >Add Streamer Profile</button>
-      </div>
-    </mat-card>
-    <mat-form-field>
-      <input matInput type="number" formControlName="record_length" placeholder="Record Length">
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Save Atlas</button>
-  </form>
-</mat-card>
-<mat-card>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form [formGroup]="form" (submit)="onSaveAcqProject()" *ngIf="!isLoading">
-    <mat-form-field>
-      <input matInput type="text" formControlName="area" placeholder="Area">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" formControlName="contract" placeholder="Contract">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" formControlName="vessel" placeholder="Vesel">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" formControlName="contractor" placeholder="Contractor">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Start Date</mat-label>
-      <input matInput [matDatepicker]="start_date_picker" formControlName="start_date">
-      <mat-datepicker-toggle matSuffix [for]="start_date_picker"></mat-datepicker-toggle>
-      <mat-datepicker #start_date_picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>End Date</mat-label>
-      <input matInput [matDatepicker]="end_date_picker" formControlName="end_date">
-      <mat-datepicker-toggle matSuffix [for]="end_date_picker"></mat-datepicker-toggle>
-      <mat-datepicker #end_date_picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Mobilization Start Date</mat-label>
-      <input matInput [matDatepicker]="mob_start_date_picker" formControlName="mob_start_date">
-      <mat-datepicker-toggle matSuffix [for]="mob_start_date_picker"></mat-datepicker-toggle>
-      <mat-datepicker #mob_start_date_picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Mobilization End Date</mat-label>
-      <input matInput [matDatepicker]="mob_end_date" formControlName="mob_end_date">
-      <mat-datepicker-toggle matSuffix [for]="mob_end_date"></mat-datepicker-toggle>
-      <mat-datepicker #mob_end_date></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" formControlName="volume" placeholder="Volume (square kilometers)">
+      <input matInput type="number" formControlName="volume" placeholder="Volume (skm)">
     </mat-form-field>
     <mat-form-field>
       <input matInput type="number" formControlName="source_interval" placeholder="Source Interval">
@@ -180,14 +82,22 @@
         <input matInput type="number" formControlName="y" placeholder="Direction Y">
       </mat-form-field>
     </div>
-    <div formArrayName="streamer_profile" class="latlong">
+    <div formArrayName="streamer_profile">
+      <div *ngFor="let spCtrl of controls; let i = index">
         <mat-form-field>
-          <input matInput formControlName="i" placeholder="Streamer Profile">
+          <input matInput type="text" formControlName="{{i}}" placeholder="Streamer Profile">
         </mat-form-field>
+        <button mat-mini-fab color="primary" type="button" (click)="onAddStreamerProfile()" style="margin-left: 1rem; margin-right: 1rem;">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" type="button" (click)="onDeleteStreamerProfile(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </div>
     <mat-form-field>
-      <input matInput type="number" formControlName="record_length" placeholder="Record Length">
+      <input matInput type="number" formControlName="planned_completion_days" placeholder="Planned Completion Days">
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Save Atlas</button>
+    <button mat-raised-button color="primary" type="submit" style="display: block;">Save Atlas</button>
   </form>
 </mat-card>
