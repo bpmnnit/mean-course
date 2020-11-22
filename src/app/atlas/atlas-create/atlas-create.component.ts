@@ -23,6 +23,11 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
   isLoading = false;
   form: FormGroup;
   locationMapImagePreview: string;
+  foldMapImagePreview: string;
+  inlineImagePreview: string;
+  xlineImagePreview: string;
+  timeSliceImagePreview: string;
+
   dutyTypes: DutyType[] = [
     { value: 'Onshore', viewValue: 'Onshore' },
     { value: 'Onshore', viewValue: 'Offshore' }
@@ -69,6 +74,10 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
       proctodate: new FormControl(null),
       procagency: new FormControl(null),
       locationMapImage: new FormControl(null),
+      foldMapImage: new FormControl(null),
+      inlineImage: new FormControl(null),
+      xlineImage: new FormControl(null),
+      timeSliceImage: new FormControl(null)
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if(paramMap.has('atlasId')) {
@@ -100,6 +109,10 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
             proctodate: atlasData.proctodate,
             procagency: atlasData.procagency,
             locationMapImagePath: atlasData.locationMapImagePath,
+            foldMapImagePath: atlasData.foldMapImagePath,
+            inlineImagePath: atlasData.inlineImagePath,
+            xlineImagePath: atlasData.xlineImagePath,
+            timeSliceImagePath: atlasData.timeSliceImagePath,
             creator: atlasData.creator
           };
           this.form.setValue({
@@ -123,7 +136,11 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
             procfromdate: atlasData.procfromdate,
             proctodate: atlasData.proctodate,
             procagency: atlasData.procagency,
-            locationMapImage: atlasData.locationMapImagePath
+            locationMapImage: atlasData.locationMapImagePath,
+            foldMapImage: atlasData.foldMapImagePath,
+            inlineImage: atlasData.inlineImagePath,
+            xlineImage: atlasData.xlineImagePath,
+            timeSliceImage: atlasData.timeSliceImagePath
           });
         });
       } else {
@@ -186,7 +203,11 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
         this.form.value.procfromdate,
         this.form.value.proctodate,
         this.form.value.procagency,
-        this.form.value.locationMapImage
+        this.form.value.locationMapImage,
+        this.form.value.foldMapImage,
+        this.form.value.inlineImage,
+        this.form.value.xlineImage,
+        this.form.value.timeSliceImage
       );
     } else {
       this.atlasService.updateAtlas(
@@ -211,21 +232,78 @@ export class AtlasCreateComponent implements OnInit, OnDestroy {
         this.form.value.procfromdate,
         this.form.value.proctodate,
         this.form.value.procagency,
-        this.form.value.locationMapImage
+        this.form.value.locationMapImage,
+        this.form.value.foldMapImage,
+        this.form.value.inlineImage,
+        this.form.value.xlineImage,
+        this.form.value.timeSliceImage
       );
     }
     this.form.reset();
   }
 
-  onImagePicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0]; // file object
-    this.form.patchValue({locationMapImage: file});
-    this.form.get('locationMapImage').updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.locationMapImagePreview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+  onImagePicked(num: number, event: Event) {
+    const e = (event.target as HTMLInputElement);
+    if(e.files && e.files.length) {
+      console.log(e.files);
+      switch(num) {
+        case 0: {
+          this.form.patchValue({locationMapImage: e.files[0]});
+          let pp = this.form.get('locationMapImage');
+          pp.updateValueAndValidity();
+          const locationMapImageReader = new FileReader();
+          locationMapImageReader.onload = () => {
+            this.locationMapImagePreview = locationMapImageReader.result as string;
+          };
+          locationMapImageReader.readAsDataURL(e.files[0]);
+          break;
+        }
+        case 1: {
+          this.form.patchValue({foldMapImage: e.files[0]});
+          let tt = this.form.get('foldMapImage');
+          tt.updateValueAndValidity();
+          const foldMapImageReader = new FileReader();
+          foldMapImageReader.onload = () => {
+            this.foldMapImagePreview = foldMapImageReader.result as string;
+          };
+          foldMapImageReader.readAsDataURL(e.files[0]);
+          break;
+        }
+        case 2: {
+          this.form.patchValue({inlineImage: e.files[0]});
+          let tt = this.form.get('inlineImage');
+          tt.updateValueAndValidity();
+          const inlineImageReader = new FileReader();
+          inlineImageReader.onload = () => {
+            this.inlineImagePreview = inlineImageReader.result as string;
+          };
+          inlineImageReader.readAsDataURL(e.files[0]);
+          break;
+        }
+        case 3: {
+          this.form.patchValue({xlineImage: e.files[0]});
+          let tt = this.form.get('xlineImage');
+          tt.updateValueAndValidity();
+          const xlineImageReader = new FileReader();
+          xlineImageReader.onload = () => {
+            this.xlineImagePreview = xlineImageReader.result as string;
+          };
+          xlineImageReader.readAsDataURL(e.files[0]);
+          break;
+        }
+        case 4: {
+          this.form.patchValue({timeSliceImage: e.files[0]});
+          let tt = this.form.get('timeSliceImage');
+          tt.updateValueAndValidity();
+          const timeSliceImageReader = new FileReader();
+          timeSliceImageReader.onload = () => {
+            this.timeSliceImagePreview = timeSliceImageReader.result as string;
+          };
+          timeSliceImageReader.readAsDataURL(e.files[0]);
+          break;
+        }
+      }
+    }
   }
 
   ngOnDestroy() {

@@ -4,6 +4,7 @@ exports.createAtlas = (req, res, next) => {
   const url = req.protocol + '://' + req.get("host");
   console.log(url);
   console.log(req.body);
+  console.log(req.files);
   const atlas = new Atlas({
     sig: req.body.sig,
     name: req.body.name,
@@ -25,7 +26,11 @@ exports.createAtlas = (req, res, next) => {
     procfromdate: req.body.procfromdate,
     proctodate: req.body.proctodate,
     procagency: req.body.procagency,
-    locationMapImagePath: url + '/images/' + req.file.filename,
+    locationMapImagePath: url + '/images/' + req.files[0].filename,
+    foldMapImagePath: url + '/images/' + req.files[1].filename,
+    inlineImagePath: url + '/images/' + req.files[2].filename,
+    xlineImagePath: url + '/images/' + req.files[3].filename,
+    timeSliceImagePath: url + '/images/' + req.files[4].filename,
     creator: req.userData.userId
   });
   atlas.save().then(createdAtlas => {

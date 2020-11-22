@@ -16,8 +16,8 @@ export class AtlasListComponent implements OnInit, OnDestroy {
   atlas: Atlas[] = [];
   isLoading = false;
   totalAtlas = 0;
-  atlasPerPage = 2;
-  pageSizeOptions = [1, 2, 5, 10];
+  atlasPerPage = 10;
+  pageSizeOptions = [10, 25, 50, 100];
   currentPage = 1;
   userIsAuthenticated = false;
   userId: string;

@@ -20,6 +20,10 @@ export interface Atlas {
   proctodate: Date;
   procagency: string;
   locationMapImagePath: string;
+  foldMapImagePath: string;
+  inlineImagePath: string;
+  xlineImagePath: string;
+  timeSliceImagePath: string;
   acqgrid: [{lat:string, lng: string}];
   creator: string;
 }

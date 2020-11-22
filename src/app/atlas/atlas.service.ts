@@ -67,12 +67,12 @@ export class AtlasService {
   }
 
   getOneAtlas(id: string) {
-    return this.http.get<{ _id: string, sig: string, name: string, onoff: string, sector: string, basin: string, asset: string, blocktype: string, year: string, size: number, surveymode: string, sourcetype: string, acqgrid: [{lat: string, lng: string}], acqparty: string, acqfromdate: Date, acqtodate: Date, acqagency: string, procparty: string, procfromdate: Date, proctodate: Date, procagency: string, locationMapImagePath: string, creator: string }>(
+    return this.http.get<{ _id: string, sig: string, name: string, onoff: string, sector: string, basin: string, asset: string, blocktype: string, year: string, size: number, surveymode: string, sourcetype: string, acqgrid: [{lat: string, lng: string}], acqparty: string, acqfromdate: Date, acqtodate: Date, acqagency: string, procparty: string, procfromdate: Date, proctodate: Date, procagency: string, locationMapImagePath: string, foldMapImagePath: string, inlineImagePath: string, xlineImagePath: string, timeSliceImagePath: string, creator: string }>(
       BACKEND_URL + id
     );
   }
 
-  addAtlas(sig: string, name: string, onoff: string, sector: string, basin: string, asset: string, blocktype: string, year: string, size: number, surveymode: string, sourcetype: string, acqgrid: [{lat: string, lng: string}], acqparty: string, acqfromdate: Date, acqtodate: Date, acqagency: string, procparty: string, procfromdate: Date, proctodate: Date, procagency: string, locationMapImage: File) {
+  addAtlas(sig: string, name: string, onoff: string, sector: string, basin: string, asset: string, blocktype: string, year: string, size: number, surveymode: string, sourcetype: string, acqgrid: [{lat: string, lng: string}], acqparty: string, acqfromdate: Date, acqtodate: Date, acqagency: string, procparty: string, procfromdate: Date, proctodate: Date, procagency: string, locationMapImage: File, foldMapImage: File, inlineImage: File, xlineImage: File, timeSliceImage: File) {
     console.log(acqgrid);
     const atlasData = new FormData();
     atlasData.append("sig", sig);
@@ -83,20 +83,23 @@ export class AtlasService {
     atlasData.append("asset", asset);
     atlasData.append("blocktype", blocktype);
     atlasData.append("year", year);
-    atlasData.append("size", size.toString());
+    if(size) { atlasData.append("size", size.toString()); }
     atlasData.append("surveymode", surveymode);
     atlasData.append("sourcetype", sourcetype);
-    atlasData.append("acqgrid", JSON.stringify(acqgrid));
+    if(acqgrid) { atlasData.append("acqgrid", JSON.stringify(acqgrid)); }
     atlasData.append("acqparty", acqparty);
-    atlasData.append("acqfromdate", acqfromdate.toString());
-    atlasData.append("acqtodate", acqtodate.toString());
+    if(acqfromdate) { atlasData.append("acqfromdate", acqfromdate.toString()); }
+    if(acqtodate) { atlasData.append("acqtodate", acqtodate.toString()); }
     atlasData.append("acqagency", acqagency);
     atlasData.append("procparty", procparty);
-    atlasData.append("procfromdate", procfromdate.toString());
-    atlasData.append("proctodate", proctodate.toString());
+    if(procfromdate) { atlasData.append("procfromdate", procfromdate.toString()); }
+    if(proctodate) { atlasData.append("proctodate", proctodate.toString());  }
     atlasData.append("procagency", procagency);
     atlasData.append("locationMapImage", locationMapImage, sig);
-    console.log(atlasData);
+    atlasData.append("foldMapImage", foldMapImage, sig);
+    atlasData.append("inlineImage", inlineImage, sig);
+    atlasData.append("xlineImage", xlineImage, sig);
+    atlasData.append("timeSliceImage", timeSliceImage, sig);
     this.http
       .post<{ message: string; atlas: Atlas }>(
         BACKEND_URL,
@@ -125,9 +128,9 @@ export class AtlasService {
     return formattedDate;
   }
 
-  updateAtlas(id: string, sig: string, name: string, onoff: string, sector: string, basin: string, asset: string, blocktype: string, year: string, size: number, surveymode: string, sourcetype: string, acqgrid: [{lat: string, lng: string}], acqparty: string, acqfromdate: Date, acqtodate: Date, acqagency: string, procparty: string, procfromdate: Date, proctodate: Date, procagency: string, locationMapImage: File | string) {
+  updateAtlas(id: string, sig: string, name: string, onoff: string, sector: string, basin: string, asset: string, blocktype: string, year: string, size: number, surveymode: string, sourcetype: string, acqgrid: [{lat: string, lng: string}], acqparty: string, acqfromdate: Date, acqtodate: Date, acqagency: string, procparty: string, procfromdate: Date, proctodate: Date, procagency: string, locationMapImage: File | string, foldMapImage: File | string, inlineImage: File | string, xlineImage: File | string, timeSliceImage: File | string) {
     let atlasData: Atlas | FormData;
-    if(typeof locationMapImage === 'object') {
+    if(typeof locationMapImage === 'object' || typeof foldMapImage === 'object' || typeof inlineImage === 'object' || typeof xlineImage === 'object' || typeof timeSliceImage === 'object') {
       atlasData = new FormData();
       atlasData.append("id", id);
       atlasData.append("sig", sig);
@@ -151,6 +154,10 @@ export class AtlasService {
       atlasData.append("proctodate", proctodate.toString());
       atlasData.append("procagency", procagency);
       atlasData.append("locationMapImage", locationMapImage, sig);
+      atlasData.append("foldMapImage", foldMapImage, sig);
+      atlasData.append("inlineImage", inlineImage, sig);
+      atlasData.append("xlineImage", xlineImage, sig);
+      atlasData.append("timeSliceImage", timeSliceImage, sig);
     } else {
       atlasData = {
         id: id,
@@ -175,6 +182,10 @@ export class AtlasService {
         proctodate: proctodate,
         procagency: procagency,
         locationMapImagePath: locationMapImage,
+        foldMapImagePath: foldMapImage,
+        inlineImagePath: inlineImage,
+        xlineImagePath: xlineImage,
+        timeSliceImagePath: timeSliceImage,
         creator: null
       };
     }

@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const upload = multer();
+//const upload = multer();
 const mongoose = require('mongoose');
 
 mongoose.set('useNewUrlParser', true);
@@ -22,7 +22,7 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); // body-parser is deprecated and does not parse multipart/form-data
 app.use("/images", express.static(path.join("backend/images"))); // allows to access the /images static contents folder
-app.use(upload.array()); // for parsing multipart/form-data
+//app.use(upload.array()); // for parsing multipart/form-data
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

@@ -157,15 +157,44 @@
     </mat-form-field>
     <div>
       <span>Select the Location Map Image: </span>
-      <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Location Map Image</button>
-      <input type="file" #filePicker (change)="onImagePicked($event)">
+      <button mat-stroked-button type="button" (click)="picker1.click()">Pick Location Map Image</button>
+      <input type="file" id="locationMapImage" #picker1 (change)="onImagePicked(0, $event)" multiple>
     </div>
     <div class="image-preview" *ngIf="locationMapImagePreview !== '' && locationMapImagePreview && form.get('locationMapImage').valid">
       <img [src]="locationMapImagePreview" [alt]="form.value.sig">
     </div>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit">Save Atlas</button>
+    <div>
+      <span>Select the Fold Map Image: </span>
+      <button mat-stroked-button type="button" (click)="picker2.click()">Pick Fold Map Image</button>
+      <input type="file" id="foldMapImage" #picker2 (change)="onImagePicked(1, $event)">
+    </div>
+    <div class="image-preview" *ngIf="foldMapImagePreview !== '' && foldMapImagePreview && form.get('foldMapImage').valid">
+      <img [src]="foldMapImagePreview" [alt]="form.value.sig">
+    </div>
+    <div>
+      <span>Select the Inline Section Image: </span>
+      <button mat-stroked-button type="button" (click)="picker3.click()">Pick Inline Section Image</button>
+      <input type="file" id="inlineImage" #picker3 (change)="onImagePicked(2, $event)">
+    </div>
+    <div class="image-preview" *ngIf="inlineImagePreview !== '' && inlineImagePreview && form.get('inlineImage').valid">
+      <img [src]="inlineImagePreview" [alt]="form.value.sig">
+    </div>
+    <div>
+      <span>Select the Xline Section Image: </span>
+      <button mat-stroked-button type="button" (click)="picker4.click()">Pick Xline Section Image</button>
+      <input type="file" id="xlineImage" #picker4 (change)="onImagePicked(3, $event)">
+    </div>
+    <div class="image-preview" *ngIf="xlineImagePreview !== '' && xlineImagePreview && form.get('xlineImage').valid">
+      <img [src]="xlineImagePreview" [alt]="form.value.sig">
+    </div>
+    <div>
+      <span>Select the TimeSlice Section Image: </span>
+      <button mat-stroked-button type="button" (click)="picker5.click()">Pick TimeSlice Section Image</button>
+      <input type="file" id="timeSliceImage" #picker5 (change)="onImagePicked(4, $event)">
+    </div>
+    <div class="image-preview" *ngIf="timeSliceImagePreview !== '' && timeSliceImagePreview && form.get('timeSliceImage').valid">
+      <img [src]="timeSliceImagePreview" [alt]="form.value.sig">
+    </div>
+    <button mat-raised-button color="primary" type="submit">Save Atlas</button>
   </form>
 </mat-card>

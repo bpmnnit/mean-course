@@ -2,8 +2,10 @@
 <mat-accordion multi="true" *ngIf="atlas.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let an_atlas of atlas">
     <mat-expansion-panel-header>
-      {{ an_atlas.sig }}
+      <h3>{{ an_atlas.sig }}</h3>
     </mat-expansion-panel-header>
+    <h3>Survey Summary</h3>
+    
     <p>{{ an_atlas.name }}</p>
     <p>{{ an_atlas.onoff }}</p>
     <p>{{ an_atlas.sector }}</p>
