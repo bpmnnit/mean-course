@@ -13,7 +13,7 @@ import {
   MatTableModule,
   MAT_DATE_LOCALE,
   MatIconModule,
-  MatSelectModule
+  MatSelectModule,
 } from '@angular/material';
 
 @NgModule({
@@ -30,7 +30,7 @@ import {
     MatNativeDateModule,
     MatTableModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB'} // To have the MAT date format as DD/MM/YYYY

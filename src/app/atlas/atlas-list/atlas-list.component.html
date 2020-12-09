@@ -1,43 +1,182 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-accordion multi="true" *ngIf="atlas.length > 0 && !isLoading">
-  <mat-expansion-panel *ngFor="let an_atlas of atlas">
-    <mat-expansion-panel-header>
-      <h3>{{ an_atlas.sig }}</h3>
-    </mat-expansion-panel-header>
-    <h3>Survey Summary</h3>
-    
-    <p>{{ an_atlas.name }}</p>
-    <p>{{ an_atlas.onoff }}</p>
-    <p>{{ an_atlas.sector }}</p>
-    <p>{{ an_atlas.basin }}</p>
-    <p>{{ an_atlas.asset }}</p>
-    <p>{{ an_atlas.blocktype }}</p>
-    <p>{{ an_atlas.year }}</p>
-    <p>{{ an_atlas.size }}</p>
-    <p>{{ an_atlas.surveymode }}</p>
-    <p>{{ an_atlas.sourcetype }}</p>
-    <p>{{ an_atlas.acqparty }}</p>
-    <p>{{ an_atlas.acqfromdate }}</p>
-    <p>{{ an_atlas.acqtodate }}</p>
-    <p>{{ an_atlas.acqagency }}</p>
-    <p>{{ an_atlas.procparty }}</p>
-    <p>{{ an_atlas.procfromdate }}</p>
-    <p>{{ an_atlas.proctodate }}</p>
-    <p>{{ an_atlas.procagency }}</p>
-    <div class="an_atlas-locationMapImage">
-      <img [src]="an_atlas.locationMapImagePath" [alt]="an_atlas.sig">
-    </div>
-    <mat-action-row *ngIf="userIsAuthenticated && userId === an_atlas.creator">
-      <a mat-button color="primary" [routerLink]="['/edit', an_atlas.id]">EDIT</a>
-      <button mat-button color="warn" (click)="onDelete(an_atlas.id)">DELETE</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search by SIG, Name etc" #input>
+</mat-form-field>
+<table mat-table
+       [dataSource]="dataSource" multiTemplateDataRows
+       class="mat-elevation-z8">
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+  </ng-container>
+
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+      <div class="example-element-detail"
+           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <!-- <div class="example-element-diagram">
+          <div class="example-element-position"> {{element.sig}} </div>
+          <div class="example-element-symbol"> {{element.name}} </div>
+          <div class="example-element-name"> {{element.onoff}} </div>
+          <div class="example-element-weight"> {{element.sector}} </div>
+        </div>
+        <div class="example-element-description">
+          {{element.basin}}
+          <span class="example-element-description-attribution"> -- Wikipedia </span>
+        </div> -->
+        <!-- <div class="example-element-diagram">
+          <span style="width: 100px; text-align: right;">SIG</span><span style="text-align: left; margin-left: 1rem;">{{ element.sig }}</span>
+          <table>
+            <tbody>
+              <tr><td>SIG</td><td>{{ element.sig }}</td></tr>
+              <tr><td>Name</td><td>{{ element.name }}</td></tr>
+              <tr><td>Onshore/Offshore</td><td>{{ element.onoff }}</td></tr>
+              <tr><td>Sector</td><td>{{ element.sector }}</td></tr>
+              <tr><td>Basin</td><td>{{ element.basin }}</td></tr>
+              <tr><td>Asset</td><td>{{ element.asset }}</td></tr>
+              <tr><td>Block Type</td><td>{{ element.blocktype }}</td></tr>
+              <tr><td>Year</td><td>{{ element.year }}</td></tr>
+              <tr><td>Size</td><td>{{ element.size }}</td></tr>
+              <tr><td>Survey Mode</td><td>{{ element.surveymode }}</td></tr>
+            </tbody>
+          </table>
+        </div> -->
+        <div class="heading-1">Survey Summary</div>
+        <div class="table-like">
+          <div>
+            <span>SIG:</span>
+            <span>{{ element.sig }}</span>
+          </div>
+          <div>
+            <span>Name:</span>
+            <span>{{ element.name }}</span>
+          </div>
+          <div>
+            <span>Onshore/Offshore:</span>
+            <span>{{ element.onoff }}</span>
+          </div>
+          <div>
+            <span>Sector:</span>
+            <span>{{ element.sector }}</span>
+          </div>
+          <div>
+            <span>Basin:</span>
+            <span>{{ element.basin }}</span>
+          </div>
+          <div>
+            <span>Asset:</span>
+            <span>{{ element.Asset }}</span>
+          </div>
+          <div>
+            <span>Block Type:</span>
+            <span>{{ element.blocktype }}</span>
+          </div>
+          <div>
+            <span>Year:</span>
+            <span>{{ element.year }}</span>
+          </div>
+          <div>
+            <span>Size:</span>
+            <span>{{ element.size }}</span>
+          </div>
+          <div>
+            <span>Survey Mode:</span>
+            <span>{{ element.surveymode }}</span>
+          </div>
+          <div>
+            <span>Source Type:</span>
+            <span>{{ element.sourcetype }}</span>
+          </div>
+        </div>
+        <div class="heading-1">Acquisition Grid</div>
+        <div class="table-like">
+          <div>
+            <span>Point</span>
+            <span>Lat</span>
+            <span>Long</span>
+          </div>
+          <div *ngFor="let g of element.acqgrid; let i=index">
+            <span>{{ i + 1 }}</span>
+            <span>{{ g.lat }}</span>
+            <span>{{ g.lng }}</span>
+          </div>
+        </div>
+        <div class="heading-1">Acquisition</div>
+        <div class="table-like">
+          <div>
+            <span>Acquisition Party:</span>
+            <span>{{ element.acqparty }}</span>
+          </div>
+          <div>
+            <span>Acquisition Start Date:</span>
+            <span>{{ element.acqfromdate }}</span>
+          </div>
+          <div>
+            <span>Acquisition End Date:</span>
+            <span>{{ element.acqtodate }}</span>
+          </div>
+          <div>
+            <span>Acquisition Agency:</span>
+            <span>{{ element.acqagency }}</span>
+          </div>
+        </div>
+        <div class="heading-1">Processing</div>
+        <div class="table-like">
+          <div>
+            <span>Processing Party:</span>
+            <span>{{ element.procparty }}</span>
+          </div>
+          <div>
+            <span>Processing Start Date:</span>
+            <span>{{ element.procfromdate }}</span>
+          </div>
+          <div>
+            <span>Processing End Date:</span>
+            <span>{{ element.proctodate }}</span>
+          </div>
+          <div>
+            <span>Processing Agency:</span>
+            <span>{{ element.procagency }}</span>
+          </div>
+        </div>
+        <div class="atlas-image">
+          <img [src]="element.locationMapImagePath" [alt]="element.name">
+        </div>
+        <div class="atlas-image">
+          <img [src]="element.foldMapImagePath" [alt]="element.name">
+        </div>
+        <div class="atlas-image">
+          <img [src]="element.inlineImagePath" [alt]="element.name">
+        </div>
+        <div class="atlas-image">
+          <img [src]="element.xlineImagePath" [alt]="element.name">
+        </div>
+        <div class="atlas-image">
+          <img [src]="element.timeSliceImagePath" [alt]="element.name">
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
+
 <mat-paginator
   [length]="totalAtlas"
   [pageSize]="atlasPerPage"
   [pageSizeOptions]="pageSizeOptions"
   (page)="onChangedPage($event)"
-  *ngIf="atlas.length > 0">
+  *ngIf="atlas.length > 0"
+  showFirstLastButtons>
 </mat-paginator>
+
 <p class="info-text mat-body-1" *ngIf="atlas.length <= 0 && !isLoading">No atlas added yet!</p>
+

@@ -1,28 +1,43 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PageEvent } from '@angular/material';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 
 import { Atlas } from '../atlas.model';
 import { AtlasService } from '../atlas.service';
 import { AuthService } from 'src/app/auth/auth.service';
-
+import { PageEvent } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-atlas-list',
   templateUrl: './atlas-list.component.html',
-  styleUrls: ['./atlas-list.component.css']
+  styleUrls: ['./atlas-list.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
+
 export class AtlasListComponent implements OnInit, OnDestroy {
+  sort: MatSort;
+  //sort: MatSort;
   atlas: Atlas[] = [];
   isLoading = false;
   totalAtlas = 0;
-  atlasPerPage = 10;
-  pageSizeOptions = [10, 25, 50, 100];
+  atlasPerPage = 20;
+  pageSizeOptions = [20, 50, 100];
   currentPage = 1;
   userIsAuthenticated = false;
   userId: string;
+  displayedColumns: string[] = ['sig', 'name', 'onoff', 'sector', 'basin', 'asset', 'blocktype', 'year', 'size', 'surveymode'];
+  dataSource = null;
+  expandedElement: Atlas | null;
   private atlasSub: Subscription;
-  private authStatusSubs: Subscription;
+  private authStatusSubs: Subscription
 
   constructor(public atlasService: AtlasService, private authService: AuthService) {}
 
@@ -35,6 +50,8 @@ export class AtlasListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.totalAtlas = atlasData.atlasCount;
         this.atlas = atlasData.atlas;
+        this.dataSource = new MatTableDataSource<Atlas>(this.atlas);
+        this.dataSource.sort = this.sort;
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSubs = this.authService
@@ -65,4 +82,13 @@ export class AtlasListComponent implements OnInit, OnDestroy {
     this.atlasPerPage = pageData.pageSize;
     this.atlasService.getAtlas(this.atlasPerPage, this.currentPage);
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  // ngAfterViewInit() {
+  //   console.log(this.dataSource);
+  // }
 }
