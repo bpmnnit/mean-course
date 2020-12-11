@@ -119,8 +119,8 @@ export class AtlasService {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;
     let dt = date.getDate();
-    let day = '';
-    let m = '';
+    let day: string | number = dt;
+    let m: string | number = month;
 
     if (dt < 10) {
       day = '0' + dt.toString();
@@ -128,7 +128,8 @@ export class AtlasService {
     if (month < 10) {
       m = '0' + month.toString();
     }
-    let formattedDate = day + '/' + m + '/'+ year;
+    let formattedDate = day.toString() + '/' + m.toString() + '/'+ year.toString();
+    console.log(formattedDate);
     return formattedDate;
   }
 
