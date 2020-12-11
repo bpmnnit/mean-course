@@ -46,6 +46,10 @@ export class AtlasService {
               proctodate: this.getFormattedDate(an_atlas.proctodate),
               procagency: an_atlas.procagency,
               locationMapImagePath: an_atlas.locationMapImagePath,
+              foldMapImagePath: an_atlas.foldMapImagePath,
+              inlineImagePath: an_atlas.inlineImagePath,
+              xlineImagePath: an_atlas.xlineImagePath,
+              timeSliceImagePath: an_atlas.timeSliceImagePath,
               creator: an_atlas.creator
             };
           }),

@@ -50,6 +50,7 @@ export class AtlasListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.totalAtlas = atlasData.atlasCount;
         this.atlas = atlasData.atlas;
+        console.log(this.atlas);
         this.dataSource = new MatTableDataSource<Atlas>(this.atlas);
         this.dataSource.sort = this.sort;
       });

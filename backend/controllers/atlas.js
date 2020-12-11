@@ -26,11 +26,11 @@ exports.createAtlas = (req, res, next) => {
     procfromdate: req.body.procfromdate,
     proctodate: req.body.proctodate,
     procagency: req.body.procagency,
-    locationMapImagePath: url + '/images/' + req.files[0].filename,
-    foldMapImagePath: url + '/images/' + req.files[1].filename,
-    inlineImagePath: url + '/images/' + req.files[2].filename,
-    xlineImagePath: url + '/images/' + req.files[3].filename,
-    timeSliceImagePath: url + '/images/' + req.files[4].filename,
+    locationMapImagePath: url + '/images/locationMapImages/' + req.files[0].filename,
+    foldMapImagePath: url + '/images/foldMapImages/' + req.files[1].filename,
+    inlineImagePath: url + '/images/inlineImages/' + req.files[2].filename,
+    xlineImagePath: url + '/images/xlineImages/' + req.files[3].filename,
+    timeSliceImagePath: url + '/images/timeSliceImages/' + req.files[4].filename,
     creator: req.userData.userId
   });
   atlas.save().then(createdAtlas => {
